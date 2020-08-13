@@ -10,7 +10,7 @@ require('dotenv').config();
 const app = express();
 app.enable('trust proxy');
 
-const QRL_LINK_API = process.env.QRL_LINK_API;
+const QURL_LINK_API = process.env.QURL_LINK_API;
 
 app.use(helmet());
 app.use(morgan('common'));
@@ -29,7 +29,7 @@ app.post('/api/urls', async (req, res, next) => {
             throw new Error('Url is empty :v');
         }
 
-        if (url.includes('qrl')) {
+        if (url.includes('q-url')) {
             throw new Error('Stop it.');
         }
 
@@ -52,10 +52,10 @@ app.post('/api/urls', async (req, res, next) => {
             }
         }
 
-        await axios.post(QRL_LINK_API, data, config)
+        await axios.post(QURL_LINK_API, data, config)
             .then(response => {
                 const link = JSON.stringify({
-                    qrl: process.env.QRL_LINK + "/" + response.data.stamp,
+                    qurl: process.env.QURL_LINK + "/" + response.data.stamp,
                 })
 
                 res.json(link);
@@ -72,7 +72,7 @@ app.post('/api/urls', async (req, res, next) => {
 app.get('/:stamp', async (req, res, next) => {
     const {stamp: stamp} = req.params;
     try {
-        await axios.get(QRL_LINK_API + "/" + stamp)
+        await axios.get(QURL_LINK_API + "/" + stamp)
             .then(response => {
                 res.redirect(response.data.rlink);
             }).catch(error => {
