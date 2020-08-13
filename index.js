@@ -22,8 +22,6 @@ const notFoundPath = path.join(__dirname, 'public/404.html');
 app.post('/api/urls', async (req, res, next) => {
     let {stamp, url} = req.body;
 
-    console.log(req.body.stamp.length);
-
     try {
         if (!url) {
             throw new Error('Url is empty :v');
@@ -75,8 +73,8 @@ app.get('/:stamp', async (req, res, next) => {
         await axios.get(QURL_LINK_API + "/" + stamp)
             .then(response => {
                 res.redirect(response.data.rlink);
-            }).catch(error => {
-                console.log(error);
+            }).catch(() => {
+                throw new Error();
             });
     } catch (error) {
         return res.status(404).sendFile(notFoundPath);
