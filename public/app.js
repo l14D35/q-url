@@ -29,7 +29,7 @@ const app = new Vue({
       console.log(result);
       if (response.ok) {
         this.formVisible = false;
-        this.created = JSON.parse(result).qurl;
+        this.created = JSON.parse(result).qrl;
       } else {
         this.error = result.message;
       }
