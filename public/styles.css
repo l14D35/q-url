@@ -95,6 +95,12 @@ header {
     color: inherit;
 }
 
-.btn {
+.create.btn {
     margin: 16px;
+    padding: 0.55em 1.05em;
+}
+
+.info {
+    height: 50%;
+    margin: auto;
 }
