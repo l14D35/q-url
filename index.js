@@ -20,7 +20,7 @@ app.use(express.static('./public'));
 const notFoundPath = path.join(__dirname, 'public/404.html');
 
 app.post('/api/urls', async (req, res, next) => {
-    let {stamp, url} = req.body;
+    let {stamp, url, usages} = req.body;
 
     try {
         if (!url) {
@@ -36,12 +36,23 @@ app.post('/api/urls', async (req, res, next) => {
         }
 
         if (url.length > 250 || stamp.length > 50) {
-            throw new Error('Woah, slow down cowboy, too much.');
+            throw new Error('Woah, too long url.');
+        }
+
+        if (!(usages = parseInt(usages, 10))) {
+            throw new Error('Usages must be an integer value :/');
+        }
+
+        if (!usages || usages <= 0) {
+            usages = 3;
+        } else if (usages >= 100) {
+            usages = 100;
         }
 
         const data = JSON.stringify({
             url: url,
             stamp: stamp || undefined,
+            usages: usages
         })
 
         const config = {
@@ -54,6 +65,7 @@ app.post('/api/urls', async (req, res, next) => {
             .then(response => {
                 const link = JSON.stringify({
                     qurl: process.env.QURL_LINK + "/" + response.data.stamp,
+                    usages: response.data.usages
                 })
 
                 res.json(link);

@@ -94,3 +94,7 @@ header {
 .created a {
     color: inherit;
 }
+
+.btn {
+    margin: 16px;
+}
