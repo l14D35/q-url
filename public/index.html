@@ -23,9 +23,9 @@
         <button class="create" type="submit">create</button>
     </form>
     <div v-if="link">
-        <div style="display: inline-grid">
-            <p class="created">Your quick url is: <a :href="link" id="link" class="js-copy-link">{{link}}</a></p>
-            <button class="btn" onclick="copyLink()">copy</button>
+        <div style="display: flex; margin: 16px">
+            <p class="created info">Your quick url is: <a :href="link" class="js-copy-link" id="link">{{link}}</a></p>
+            <button class="create btn" onclick="copyLink()">copy</button>
         </div>
         <!-- TODO: handle the usages left -->
         <!--<p class="created">Usages left: {{usagesLeft}}</p>-->
